@@ -1,1 +1,3 @@
-# hw3
+# Homework Members
+-Albert Chen
+-Brandon Mercado
