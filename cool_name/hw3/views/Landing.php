@@ -38,19 +38,43 @@ class Landing extends View {
 	<h3>Highest Rated</h3>
 
 	<ol type="1">
-	<?php $this->helper->generate_top_rated(); ?>
+	<?php 
+	if(!empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_top_rated_filtered_Text($_REQUEST['filter_text']);
+	}
+	else
+	{
+		$this->helper->generate_top_rated(); 
+	} ?>
 	</ol>
 
 	<h3>Most Viewed</h3>
 
 	<ol type="1">
-	<?php $this->helper->generate_top_views(); ?>
+	<?php 
+	if(!empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_top_viewed_filtered_Text($_REQUEST['filter_text']);
+	}
+	else
+	{
+		$this->helper->generate_top_views(); 
+	} ?>
 	</ol>
 
 	<h3>Newest</h3>
 
 	<ol type="1">
-	<?php $this->helper->generate_newest(); ?>
+	<?php 
+	if(!empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_newest_filtered_Text($_REQUEST['filter_text']);
+	}
+	else
+	{
+		$this->helper->generate_newest(); 
+	} ?>
 	</ol>
 	</body>
 
