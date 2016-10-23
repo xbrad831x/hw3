@@ -32,6 +32,7 @@ class Landing extends View {
 		<option selected="selected" value="All Genres">All Genres</option>
 		<?php $this->helper->generate_genre_dropdown(); ?>
 		</select>
+		<input type="submit" value="Go">
 	</form>
 
 	<h3>Highest Rated</h3>
