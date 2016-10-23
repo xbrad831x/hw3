@@ -1,4 +1,5 @@
 <?php
+require_once("../models/Model.php");
 
 class Story extends Model {
     

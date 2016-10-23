@@ -15,6 +15,7 @@ mysqli_query($con,
         Date timestamp,
         Views INT UNSIGNED NOT NULL
     )");
+
 mysqli_query($con, 
     "CREATE TABLE genre (Animal Varchar(30),
         Funny Varchar(30),
