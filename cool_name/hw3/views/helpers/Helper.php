@@ -25,6 +25,25 @@ class Helper {
 			}
 		}
 	}
+	
+	public function generate_top_views() {
+		$this->model->db_connect();
+		$result = $this->model->sql_query("SELECT Title, Identifier FROM story ORDER BY Views DESC LIMIT 10");
+		while($row = mysqli_fetch_assoc($result))
+			{
+				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
+			}
+
+	}
+
+	public function generate_top_rated() {
+		$this->model->db_connect();
+		$result = $this->model->sql_query("SELECT Identifier, Title FROM ratings ORDER BY Sum_Of_Ratings / Num_Of_Ratings DESC LIMIT 10");
+		while($row = mysqli_fetch_assoc($result))
+			{
+				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
+			}
+	}
 
 }
 ?>
