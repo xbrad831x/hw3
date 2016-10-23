@@ -10,7 +10,7 @@ class ReadAStory extends View {
 	    }
     
     public function render() {
-        $this->renderHeader("Five Thousand Characters - Read A Story")
+        $this->renderHeader("Five Thousand Characters - Read A Story");
 		$this->model->db_connect();
 		$this->model->inc_view($_GET['identifier']);
         ?>
