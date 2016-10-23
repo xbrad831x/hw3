@@ -25,11 +25,9 @@ mysqli_query($con,
         Conspiracy Varchar(30)
     )");
 
-mysqli_query($con, 
-    "CREATE TABLE ratings (
-        Identifier VARCHAR(30) PRIMARY KEY,
-        Num_Of_Ratings INT, 
-        Sum_Of_Ratings INT
-    )");									  
+mysqli_query($con, "CREATE TABLE ratings (Identifier VARCHAR(30) PRIMARY KEY,
+						Title VARCHAR(30),
+						Num_Of_Ratings INT UNSIGNED NOT NULL, 
+						Sum_Of_Ratings INT UNSIGNED NOT NULL)");									  
 
 ?>
