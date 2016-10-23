@@ -20,8 +20,7 @@ class Model {
 	public function sql_insert_story($identifier, $title, $author, $genres, $text) {
 		$my_date = date("Y-m-d H:i:s");
 		mysqli_query($this->con,"INSERT INTO story (Identifier, Title, Author, Text, Date) VALUES ('$identifier','$title','$author','$text','$my_date')");
-		foreach($genres as $genre)
-		{
+		foreach($genres as $genre)    {
 			mysqli_query($this->con, "INSERT INTO genre ($genre) VALUES ('$identifier')");
 		}
 	}
