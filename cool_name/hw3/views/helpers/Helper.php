@@ -32,10 +32,6 @@ class Helper {
 			
 			}
 		}
-		else
-		{
-			echo "not an array";
-		}
 	}
 
 }
