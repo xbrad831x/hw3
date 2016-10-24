@@ -88,5 +88,6 @@ class Helper {
 				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
 			}
 
+    }
 }
 ?>

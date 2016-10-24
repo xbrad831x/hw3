@@ -14,7 +14,6 @@ class ReadAStory extends View {
 		$this->model->db_connect();
 		$this->model->inc_view($_GET['identifier']);
         ?>
-            <h1>Five Thousand Characters - Read A Story</h1>
 			<h1><a href="./Landing.php">Five Thousand Characters</a> - <?php echo $_GET['title']; ?></h1>
 			<div>Author: <?php echo $this->model->get_author($_GET['identifier']); ?></div>
 			<div>Date First Saved: <?php echo $this->model->get_date($_GET['identifier']); ?></div>

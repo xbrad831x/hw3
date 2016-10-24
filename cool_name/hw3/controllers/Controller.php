@@ -22,7 +22,7 @@ class Controller {
 	public function put_in_db() {
 		$this->model->db_connect();
 		$this->model->sql_insert_story($this->identifier, $this->title, $this->author, $this->genre, $this->text);
-		//header("Location: ../views/Landing.php");
+		header("Location: ../views/Landing.php");
 	}
 }
 

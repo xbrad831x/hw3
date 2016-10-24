@@ -1,7 +1,7 @@
 <?php 
 /*namespace cool_name\hw3\views\landing;*/
 require_once("View.php");
-require_once("/helpers/Helper.php");
+require_once("./helpers/Helper.php");
 
 class Landing extends View {
 
@@ -12,16 +12,8 @@ class Landing extends View {
 
 	public function render() {
 	$this->helper->populate_genre_dropdown();
+    $this->renderHeader("Five Thousand Characters")
 	?>
-		<!DOCTYPE html>
-	<html>
-		<head>
-			<meta charset="utf-8">
-			<title>Five Thousand Characters</title>
-			<link rel="stylesheet" type="text/css" href="../styles/landing_style.css">
-		</head>
-
-	<body>
 	<h1>Five Thousand Characters</h1>
 	<a href="write_something.php">Write Something!</a>
 	<h2>Check out what people are writing...<h2>
@@ -76,10 +68,8 @@ class Landing extends View {
 		$this->helper->generate_newest(); 
 	} ?>
 	</ol>
-	</body>
-
-	</html>
-	<?php 
+	<?php
+    $this->renderFooter();
 	}
 }
 $Landing = new Landing();
