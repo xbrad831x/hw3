@@ -89,5 +89,53 @@ class Helper {
 			}
 
     }
+
+    public function generate_top_viewed_filtered_genre($genre) {
+    	$this->model->db_connect();
+    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
+    	$identifiers = [];
+    	while($row = mysqli_fetch_assoc($resultt)) 
+	    	{
+	    		$identifiers[] = $row[$genre];
+	    	}
+	    $identifiers2 = join("','",$identifiers);
+		$result = $this->model->sql_query("SELECT * FROM story WHERE Identifier IN ('$identifiers2') ORDER BY Views DESC LIMIT 10");
+		while($row = mysqli_fetch_assoc($result))
+			{
+				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
+			}
+    }
+
+    public function generate_top_rated_filtered_genre($genre) {
+    	$this->model->db_connect();
+    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
+    	$identifiers = [];
+    	while($row = mysqli_fetch_assoc($resultt)) 
+	    	{
+	    		$identifiers[] = $row[$genre];
+	    	}
+	    $identifiers2 = join("','",$identifiers);
+		$result = $this->model->sql_query("SELECT * FROM ratings WHERE Identifier IN ('$identifiers2') ORDER BY Sum_Of_Ratings / Num_Of_Ratings DESC LIMIT 10");
+		while($row = mysqli_fetch_assoc($result))
+			{
+				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
+			}
+    }
+
+    public function generate_newest_filtered_genre($genre) {
+    	$this->model->db_connect();
+    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
+    	$identifiers = [];
+    	while($row = mysqli_fetch_assoc($resultt)) 
+	    	{
+	    		$identifiers[] = $row[$genre];
+	    	}
+	    $identifiers2 = join("','",$identifiers);
+		$result = $this->model->sql_query("SELECT * FROM story WHERE Identifier IN ('$identifiers2') ORDER BY Date DESC LIMIT 10");
+		while($row = mysqli_fetch_assoc($result))
+			{
+				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
+			}
+    }
 }
 ?>

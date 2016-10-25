@@ -31,9 +31,13 @@ class Landing extends View {
 
 	<ol type="1">
 	<?php 
-	if(!empty($_REQUEST['filter_text']))
+	if(!empty($_REQUEST['filter_text']) && $_REQUEST['genre_filter'] === "All Genres")
 	{
 		$this->helper->generate_top_rated_filtered_Text($_REQUEST['filter_text']);
+	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres" && empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_top_rated_filtered_genre($_REQUEST['genre_filter']);
 	}
 	else
 	{
@@ -45,9 +49,13 @@ class Landing extends View {
 
 	<ol type="1">
 	<?php 
-	if(!empty($_REQUEST['filter_text']))
+	if(!empty($_REQUEST['filter_text']) && $_REQUEST['genre_filter'] === "All Genres")
 	{
 		$this->helper->generate_top_viewed_filtered_Text($_REQUEST['filter_text']);
+	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres" && empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_top_viewed_filtered_genre($_REQUEST['genre_filter']);
 	}
 	else
 	{
@@ -59,9 +67,13 @@ class Landing extends View {
 
 	<ol type="1">
 	<?php 
-	if(!empty($_REQUEST['filter_text']))
+	if(!empty($_REQUEST['filter_text']) && $_REQUEST['genre_filter'] === "All Genres")
 	{
 		$this->helper->generate_newest_filtered_Text($_REQUEST['filter_text']);
+	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres" && empty($_REQUEST['filter_text']))
+	{
+		$this->helper->generate_newest_filtered_genre($_REQUEST['genre_filter']);
 	}
 	else
 	{
