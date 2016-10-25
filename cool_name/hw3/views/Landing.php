@@ -35,6 +35,10 @@ class Landing extends View {
 	{
 		$this->helper->generate_top_rated_filtered_Text($_REQUEST['filter_text']);
 	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres")
+	{
+		$this->helper->generate_top_rated_filtered_genre($_REQUEST['genre_filter']);
+	}
 	else
 	{
 		$this->helper->generate_top_rated(); 
@@ -49,6 +53,10 @@ class Landing extends View {
 	{
 		$this->helper->generate_top_viewed_filtered_Text($_REQUEST['filter_text']);
 	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres")
+	{
+		$this->helper->generate_top_viewed_filtered_genre($_REQUEST['genre_filter']);
+	}
 	else
 	{
 		$this->helper->generate_top_views(); 
@@ -62,6 +70,10 @@ class Landing extends View {
 	if(!empty($_REQUEST['filter_text']))
 	{
 		$this->helper->generate_newest_filtered_Text($_REQUEST['filter_text']);
+	}
+	else if(!empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] !== "All Genres")
+	{
+		$this->helper->generate_newest_filtered_genre($_REQUEST['genre_filter']);
 	}
 	else
 	{
