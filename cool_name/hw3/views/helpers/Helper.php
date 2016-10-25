@@ -23,11 +23,11 @@ class Helper {
 
 	}
 
-	public function generate_genre_dropdown() {
+	public function generate_genre_dropdown($selected) {
 		if(is_array($this->columnNames))
 		{
 			foreach($this->columnNames as $names)
-			{ 
+			{
 				echo '<option value="'.$names.'">'.$names.'</option>';
 			
 			}

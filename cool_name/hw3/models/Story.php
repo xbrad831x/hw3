@@ -9,11 +9,19 @@ class Story extends Model {
 	public $genre;
 	public $text;
     
-    public function __constructor($t,$a,$i,$g,$txt) {
-        $this->$title = $t;
-        $this->$author = $a;
-        $this->$identifier = $i;
-        $this->$genre = $g;
-        $this->$text = $txt;
+    public function __construct($t,$a,$i,$g,$txt) {
+        $this->title = $t;
+        $this->author = $a;
+        $this->identifier = $i;
+        $this->genre = $g;
+        $this->text = $txt;
+    }
+    
+    public function print_details () {
+        echo "<h2>Story</h2>";
+        echo "<h2>$this->title</h2>";
+        echo "<h2>$this->author</h2>";
+        echo "<h2>$this->identifier</h2>";
+        echo "<h2>$this->text</h2>";
     }
 }
