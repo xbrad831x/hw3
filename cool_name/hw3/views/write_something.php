@@ -22,7 +22,7 @@ class WriteSomething extends View {
             $this->title = "";
             $this->author = "";
             $this->identifier = "";
-            $this->genre = [];
+            $this->genre = [0,0,0,0,0,0];
             $this->content = "";
         } elseif (
             isset($_POST['title'])      && $_POST['title']!=""      &&
@@ -63,7 +63,7 @@ class WriteSomething extends View {
             $this->title = "";
             $this->author = "";
             $this->identifier = "";
-            $this->genre = [];
+            $this->genre = [0,0,0,0,0,0];
             $this->content = "";
         }
     }

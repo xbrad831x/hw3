@@ -28,7 +28,7 @@ class Helper {
 		{
 			foreach($this->columnNames as $index=>$names)
 			{
-                if ($selected_genres[$index] == 1) {
+                if ( sizeof($selected_genres)<sizeof($this->columnNames) && $selected_genres[$index] == 1) {
                     echo '<option value="'.$names.'" selected>'.$names.'</option>';
                 }
                 else {

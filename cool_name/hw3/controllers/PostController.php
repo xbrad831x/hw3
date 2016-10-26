@@ -51,13 +51,13 @@ class PostController {
                 Author, 
                 Text, 
                 Date) 
-            VALUES ('
-                $id','
-                $t','
-                $a','
-                $w','
-                $my_date
-        ')");
+            VALUES (
+                '$id',
+                '$t',
+                '$a',
+                '$w',
+                '$my_date
+            ')");
         mysqli_query($this->con,
              "INSERT INTO genre2 (
                 Identifier, 
@@ -67,14 +67,14 @@ class PostController {
                 Crime,
                 Fiction,
                 Conspiracy) 
-            VALUES ('
-                $id','
-                $g[0]','
-                $g[1]','
-                $g[2]','
-                $g[3]','
-                $g[4]','
-                $g[5]','
+            VALUES (
+                '$id',
+                '$g[0]',
+                '$g[1]',
+                '$g[2]',
+                '$g[3]',
+                '$g[4]',
+                '$g[5]'
             ')");
     }
     
