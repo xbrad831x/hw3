@@ -105,13 +105,18 @@ class FilterController extends Controller{
                 story.Identifier 
             FROM 
                 story, 
-                genre 
+                genre, 
+                ratings 
             WHERE 
-                $filter AND  
-                genre.Identifier = story.Identifier
-            GROUP BY Identifier
-            ORDER BY Sum_Of_Ratings / Num_Of_Ratings
-            DESC LIMIT 10;");
+                $filter AND 
+                genre.Identifier = story.Identifier 
+                        AND 
+                ratings.Identifier = story.Identifier 
+                        AND 
+                genre.Identifier = ratings.Identifier 
+            GROUP BY Identifier 
+            ORDER BY Sum_Of_Ratings / Num_Of_Ratings 
+            DESC LIMIT 10");
         if ($results=="") {
             return null;
         }
