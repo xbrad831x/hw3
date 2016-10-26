@@ -15,20 +15,11 @@ mysqli_query($con,
         Text VARCHAR(5000),
         Date timestamp,
         Views INT UNSIGNED NOT NULL
-    )");
-
-mysqli_query($con, 
-    "CREATE TABLE genre (
-        Animal Varchar(30),
-        Funny Varchar(30),
-        Cute Varchar(30),
-        Crime Varchar(30),
-        Fiction Varchar(30),
-        Conspiracy Varchar(30)
-    )");
+    )"
+);
 
 mysqli_query($con,
-    "CREATE TABLE genre2 (
+    "CREATE TABLE genre (
         Identifier VARCHAR(30) PRIMARY KEY,
         Animal BOOLEAN,
         Funny BOOLEAN,
@@ -36,11 +27,16 @@ mysqli_query($con,
         Crime BOOLEAN,
         Fiction BOOLEAN,
         Conspiracy BOOLEAN
-    )");
+    )"
+);
 
-mysqli_query($con, "CREATE TABLE ratings (Identifier VARCHAR(30) PRIMARY KEY,
-						Title VARCHAR(30),
-						Num_Of_Ratings INT UNSIGNED NOT NULL, 
-						Sum_Of_Ratings INT UNSIGNED NOT NULL)");									  
+mysqli_query($con, 
+     "CREATE TABLE ratings (
+        Identifier VARCHAR(30) PRIMARY KEY,
+        Title VARCHAR(30),
+        Num_Of_Ratings INT UNSIGNED NOT NULL, 
+        Sum_Of_Ratings INT UNSIGNED NOT NULL
+    )"
+);									  
 
 ?>

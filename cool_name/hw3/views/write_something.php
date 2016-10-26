@@ -70,42 +70,56 @@ class WriteSomething extends View {
 
     public function render() { 
         $configs = new Configs();
-        $this->genre_dropdown_helper->populate_genre_dropdown();
         $this->renderHeader("Five Thousand Characters - Write Something");
         ?>
         
         <h1><a href="./Landing.php">Five Thousand Characters</a> - Write Something</h1>
         <form method="post" action="./write_something.php" >
-            <table>
-                <tr>
-                    <td><label for="title">Title</label></td>
-                    <td><input type="text" id="title" maxlength="<?php echo $configs->input_maxlength; ?>" name="title" value="<?php echo $this->title; ?>"></td>
-                </tr>
-                <tr>
-                    <td><label for="author">Author</label></td>
-                    <td><input type="text" id="author" maxlength="<?php echo $configs->input_maxlength; ?>" name="author" value="<?php echo $this->author; ?>"></td>
-                </tr>
-                <tr>
-                    <td><label for="identifier">Identifier</label></td>
-                    <td><input type="text" id="identifier" maxlength="<?php echo $configs->input_maxlength; ?>" name="identifier" value="<?php echo $this->id; ?>"></td>
-                </tr>
-                <tr>
-                    <td><label for="select_tag">Genre</label></td>
-                    <td id="select">
-                        <select id="select_tag" name="genre[]" multiple>
-                            <?php $this->genre_dropdown_helper->generate_genre_dropdown($this->genre); ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><label for="your_writing">Your Writing</label></td>
-                    <td><textarea id="your_writing" maxlength="<?php echo $configs->story_maxlength; ?>" name="writing"><?php echo $this->content; ?></textarea></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td id="buttons"><input type="submit" name="reset" value="reset"><input type="submit" value="Save"></td>
-                </tr>
-            </table>
+            <div class="label">
+                <label for="title">Title</label>
+                <input 
+                    type="text" 
+                    id="title" 
+                    maxlength="<?php echo $configs->input_maxlength; ?>" 
+                    name="title" 
+                    value="<?php echo $this->title; ?>">
+            </div>
+            <div class="label">
+                <label for="author">Author</label>
+                <input 
+                    type="text" 
+                    id="author" 
+                    maxlength="<?php echo $configs->input_maxlength; ?>" 
+                    name="author" 
+                    value="<?php echo $this->author; ?>">
+            </div>
+            <div class="label">
+                <label for="identifier">Identifier</label>
+                <input 
+                    type="text" 
+                    id="identifier" 
+                    maxlength="<?php echo $configs->input_maxlength; ?>" 
+                    name="identifier" 
+                    value="<?php echo $this->id; ?>">
+            </div>
+            <div id="genre">
+                <label for="select_tag">Genre</label>
+                <select id="select_tag" name="genre[]" multiple>
+                    <?php $this->genre_dropdown_helper->generate_genre_dropdown($this->genre); ?>
+                </select>
+            </div>
+            <div id="text">
+                <label for="your_writing">Your Writing</label>
+                <textarea 
+                    id="your_writing" 
+                    maxlength="<?php echo $configs->story_maxlength; ?>" 
+                    name="writing"><?php echo $this->content; ?></textarea>
+                <div id="button">
+                    <input type="submit" name="reset" value="Reset">
+                    <input type="submit" name="save" value="Save">
+                </div>
+            </div>
+
         </form>
         <?php
         $this->renderFooter();

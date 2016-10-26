@@ -1,145 +1,48 @@
 <?php
 require_once("../models/Model.php");
+require_once("../configs/configs.php");
 
 class Helper {
 /*namespace cool_name\hw3\helpers;*/
-	private $columnNames = [];
+	private $column_names = [];
 	protected $model;
+    protected $configs;
 
-	public function __construct()
-	    {
-	        $this->model = new Model();   
-	    }
-
-
-	public function populate_genre_dropdown() {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT * FROM genre");
-		while($column = $this->model->fetch_column_names($result))
-		{
-			$this->columnNames[] = $column->name;
-		}
-
-
-	}
-
-	public function generate_genre_dropdown($selected_genres) {
-		if(is_array($this->columnNames))
-		{
-			foreach($this->columnNames as $index=>$names)
-			{
-                if ( sizeof($selected_genres)<sizeof($this->columnNames) && $selected_genres[$index] == 1) {
-                    echo '<option value="'.$names.'" selected>'.$names.'</option>';
-                }
-                else {
-				    echo '<option value="'.$names.'">'.$names.'</option>';
-                }
-			}
-		}
-	}
-
-	public function generate_top_views() {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Title, Identifier FROM story ORDER BY Views DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-
-	}
-
-	public function generate_top_rated() {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Identifier, Title FROM ratings ORDER BY Sum_Of_Ratings / Num_Of_Ratings DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-	}
-
-	public function generate_newest() {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Identifier, Title FROM story ORDER BY Date DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-	}
-	
-	public function generate_top_viewed_filtered_Text($text) {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Title, Identifier FROM story WHERE Title LIKE '%$text%' ORDER BY Views DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-	}
-
-	public function generate_top_rated_filtered_Text($text) {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Title, Identifier FROM ratings WHERE Title LIKE '%$text%' ORDER BY Sum_Of_Ratings / Num_Of_Ratings DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-	}
-
-	public function generate_newest_filtered_Text($text) {
-		$this->model->db_connect();
-		$result = $this->model->sql_query("SELECT Title, Identifier FROM story WHERE Title LIKE '%$text%' ORDER BY Date DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-
+	public function __construct() {
+        $this->configs = new Configs();
+        $this->column_names = $this->configs->genre_table_columns;
+        array_shift($this->column_names);
     }
-
-    public function generate_top_viewed_filtered_genre($genre) {
-    	$this->model->db_connect();
-    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
-    	$identifiers = [];
-    	while($row = mysqli_fetch_assoc($resultt)) 
-	    	{
-	    		$identifiers[] = $row[$genre];
-	    	}
-	    $identifiers2 = join("','",$identifiers);
-		$result = $this->model->sql_query("SELECT * FROM story WHERE Identifier IN ('$identifiers2') ORDER BY Views DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
+    
+    public function generate_genre_dropdown($selected_genres) {
+        foreach($this->column_names as $index=>$names) {
+            if ( sizeof($selected_genres)==sizeof($this->column_names) && $selected_genres[$index] == 1) {
+                echo '<option value="'.$names.'" selected>'.$names.'</option>';
+            }else {
+                echo '<option value="'.$names.'">'.$names.'</option>';
+            }
+        }
+	}
+    
+    public function render_list($results) {
+        if ( $results==null) {
+            return;
+        }
+        if (mysqli_num_rows($results) < 1 ) {
+            return;
+        }
+        echo '<ul>';
+        while( $row = mysqli_fetch_assoc($results) ) {
+            echo ( 
+                '<li>
+                    <a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'
+                        .$row["Title"].'
+                    </a>
+                </li>'
+            );
+        }
+        echo '</ul>';
     }
-
-    public function generate_top_rated_filtered_genre($genre) {
-    	$this->model->db_connect();
-    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
-    	$identifiers = [];
-    	while($row = mysqli_fetch_assoc($resultt)) 
-	    	{
-	    		$identifiers[] = $row[$genre];
-	    	}
-	    $identifiers2 = join("','",$identifiers);
-		$result = $this->model->sql_query("SELECT * FROM ratings WHERE Identifier IN ('$identifiers2') ORDER BY Sum_Of_Ratings / Num_Of_Ratings DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-    }
-
-    public function generate_newest_filtered_genre($genre) {
-    	$this->model->db_connect();
-    	$resultt = $this->model->sql_query("SELECT $genre FROM genre WHERE $genre IS NOT NULL");
-    	$identifiers = [];
-    	while($row = mysqli_fetch_assoc($resultt)) 
-	    	{
-	    		$identifiers[] = $row[$genre];
-	    	}
-	    $identifiers2 = join("','",$identifiers);
-		$result = $this->model->sql_query("SELECT * FROM story WHERE Identifier IN ('$identifiers2') ORDER BY Date DESC LIMIT 10");
-		while($row = mysqli_fetch_assoc($result))
-			{
-				echo '<li><a href="read_a_story.php?title='.$row["Title"].'&identifier='.$row["Identifier"].'">'.$row["Title"].'</a></li>';
-			}
-    }
+    
 }
 ?>

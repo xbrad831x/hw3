@@ -1,53 +1,64 @@
 <?php
 require_once("./View.php");
 require_once("./helpers/Helper.php");
+require_once("../controllers/ReadController.php");
 
 class ReadAStory extends View {
+    
+    private $cont;
 
-	public function __construct()
-	    {
-	        $this->model = new Model();   
-	    }
+	public function __construct() {
+        if (empty($_GET['identifier'])) {
+            header("Location:./Landing.php");
+        }
+        
+        $this->cont = new ReadController();
+        
+        if(!empty($_GET['link'])) {
+            $rate = $_GET['link'];
+            $this->cont->set_rating($_GET['identifier'], $rate);
+        }
+        $this->cont->getStory($_GET['identifier']);
+    }
     
     public function render() {
         $this->renderHeader("Five Thousand Characters - Read A Story");
-		$this->model->db_connect();
-		$this->model->inc_view($_GET['identifier']);
         ?>
-			<h1><a href="./Landing.php">Five Thousand Characters</a> - <?php echo $_GET['title']; ?></h1>
-			<div>Author: <?php echo $this->model->get_author($_GET['identifier']); ?></div>
-			<div>Date First Saved: <?php echo $this->model->get_date($_GET['identifier']); ?></div>
-			<div>Your Rating: 
-			<a href="?link=1&title=<?php echo $_GET['title']; ?>&identifier=<?php echo $_GET['identifier']; ?>" name="1">1</a>
-			<a href="?link=2&title=<?php echo $_GET['title']; ?>&identifier=<?php echo $_GET['identifier']; ?>" name="2">2</a>
-			<a href="?link=3&title=<?php echo $_GET['title']; ?>&identifier=<?php echo $_GET['identifier']; ?>" name="3">3</a>
-			<a href="?link=4&title=<?php echo $_GET['title']; ?>&identifier=<?php echo $_GET['identifier']; ?>" name="4">4</a> 
-			<a href="?link=5&title=<?php echo $_GET['title']; ?>&identifier=<?php echo $_GET['identifier']; ?>" name="5">5</a> 
-			</div>
-			<div> Average Rating: <?php echo $this->model->get_average_ratings($_GET['identifier']); ?></div>  
-			<p> Story: <?php echo '<br />'.$this->model->get_text($_GET['identifier']); ?></p> 
-
-				<?php
-			if(!empty($_GET['link']))
-			{
-				$link=$_GET['link'];
-				if ($link == '1'){
-					$this->model->set_ratings($_GET['identifier'], 1);
-				}
-				if ($link == '2'){
-					$this->model->set_ratings($_GET['identifier'], 2);
-				}
-				if ($link == '3'){
-					$this->model->set_ratings($_GET['identifier'], 3);
-				}
-				if ($link == '4'){
-					$this->model->set_ratings($_GET['identifier'], 4);
-				}
-				if ($link == '5'){
-					$this->model->set_ratings($_GET['identifier'], 5);
-				}
-			}
-            ?>  
+            <h1>
+                <a href="./Landing.php">Five Thousand Characters</a> - 
+                <?php echo $this->cont->get_title() ?>
+            </h1>
+			<div id="story">
+                <p>
+                    Author:
+                    <?php echo $this->cont->get_author() ?>
+                </p>
+                <p>
+                    Date First Saved:
+                    <?php echo $this->cont->get_date() ?>
+                </p>
+                <p>
+                    Your Rating:
+                    <?php
+                        if(!empty($_GET['link'])) {
+                            echo $_GET['link'];
+                        } else {
+                            $url= $_SERVER['REQUEST_URI'];
+                            for ($x = 1; $x < 6; $x++) {
+                                $link = $url."&link=".$x;
+                                echo "<a href='$link'>$x</a>";
+                            }
+                        }
+                    ?>
+                </p>
+                <!--1, 2, 3, 4 ,5-->
+                <p>
+                    Average Rating:
+                    <?php echo $this->cont->get_rating() ?>
+                </p>
+                <p id="title" style="margin-top: 15px;">Story:</p>
+                <p id="story_text"><?php echo $this->cont->get_text() ?></p>
+            </div>
         <?php
         $this->renderFooter();
     }

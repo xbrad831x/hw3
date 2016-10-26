@@ -8,6 +8,9 @@ class Story extends Model {
 	public $identifier;
 	public $genre;
 	public $text;
+    public $my_date;
+    public $num_of_ratings;
+    public $sum_of_ratings;
     
     public function __construct($t,$a,$i,$g,$txt) {
         $this->title = $t;
