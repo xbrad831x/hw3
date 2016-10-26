@@ -59,23 +59,11 @@ class PostController {
                 '$my_date
             ')");
         mysqli_query($this->con,
-             "INSERT INTO genre2 (
-                Identifier, 
-                Animal, 
-                Funny, 
-                Cute, 
-                Crime,
-                Fiction,
-                Conspiracy) 
-            VALUES (
-                '$id',
-                '$g[0]',
-                '$g[1]',
-                '$g[2]',
-                '$g[3]',
-                '$g[4]',
-                '$g[5]'
-            ')");
+             "INSERT INTO genre2 ( Identifier, Animal, Funny, Cute, Crime, Fiction, Conspiracy) 
+            VALUES ('$id', 0,0,0,0,0,0);");
+        foreach ($g as $genre) {
+            mysqli_query($this->con, "UPDATE genre2 SET $genre=1 WHERE Identifier='$id';");
+        }
     }
     
     public function getStory ($id) {

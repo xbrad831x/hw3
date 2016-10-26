@@ -48,7 +48,7 @@ class WriteSomething extends View {
                     $_POST['genre'],
                     $_POST['writing']);
             }
-            header("Location:../views/read_a_story.php?title=".$_POST['title']."&identifier=".$_POST['identifier']);
+            //header("Location:../views/read_a_story.php?title=".$_POST['title']."&identifier=".$_POST['identifier']);
             
         } elseif (isset($_POST['identifier']) ) {
             $story = $this->cont->getStory($_POST['identifier']);
