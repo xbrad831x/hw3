@@ -19,6 +19,7 @@ class ReadAStory extends View {
             $this->cont->set_rating($_GET['identifier'], $rate);
         }
         $this->cont->getStory($_GET['identifier']);
+        $this->cont->increment_view($_GET['identifier']);
     }
     
     public function render() {

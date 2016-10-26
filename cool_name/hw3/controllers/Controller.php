@@ -21,7 +21,7 @@ class Controller {
         mysqli_select_db($this->con, $this->configs->db_name);
     }
     
-    public function updateStory ($t, $a, $id, $g, $w) {  
+    public function updateStory ($t, $a, $id, $g, $w) { 
         mysqli_query($this->con, 
              "UPDATE story 
              SET 
@@ -53,6 +53,7 @@ class Controller {
     
     public function saveStory ($t, $a, $id, $g, $w) {           
         $my_date = date("Y-m-d H:i:s");
+        
         mysqli_query($this->con,
              "INSERT INTO story (
                 Identifier, 
