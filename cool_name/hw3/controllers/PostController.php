@@ -66,7 +66,7 @@ class PostController {
             mysqli_query($this->con, "UPDATE genre2 SET $genre=1 WHERE Identifier='$id';");
         }
         
-        mysqli_query($this->con, "INSERT INTO ratings (Identifier, Title, Num_Of_Ratings, Sum_of_Ratings) VALUES ('$id', '$t',0, 0);");
+        mysqli_query($this->con, "INSERT INTO ratings (Identifier, Title, Num_Of_Ratings, Sum_of_Ratings) VALUES ('$id', '$t', 0, 0);");
     }
     
     public function getStory ($id) {
