@@ -16,19 +16,39 @@ class WriteSomething extends View {
     public function __construct()  {
         
         $this->cont = new PostController();
+        $this->genre_dropdown_helper = new Helper();
         
-        if (
+        if (isset($_POST['reset'])) {
+            $this->title = "";
+            $this->author = "";
+            $this->identifier = "";
+            $this->genre = [];
+            $this->content = "";
+        } elseif (
             isset($_POST['title'])      && $_POST['title']!=""      &&
             isset($_POST['author'])     && $_POST['author']!=""     &&
             isset($_POST['identifier']) && $_POST['identifier']!="" &&
-            isset($_POST['genre[]'])    && $_POST['genre'] != ""    &&
+            isset($_POST['genre'])    && $_POST['genre'] != ""    &&
             isset($_POST['writing'])    && $_POST['writing'] != "")
-        {    
-            $this->title = $_POST['title'];
-            $this->author = $_POST['author'];
-            $this->identifier = $_POST['identifier'];
-            $this->genre[] = $_POST['genre[]'];
-            $this->content = $_POST['writing'];
+        {
+            $doesExists = $this->cont->checkID($_POST['identifier']);
+            
+            if ($doesExists) {
+                $this->cont->updateStory(
+                    $_POST['title'],
+                    $_POST['author'],
+                    $_POST['identifier'],
+                    $_POST['genre'],
+                    $_POST['writing']);
+            } else {
+                $this->cont->saveStory(
+                    $_POST['title'],
+                    $_POST['author'],
+                    $_POST['identifier'],
+                    $_POST['genre'],
+                    $_POST['writing']);
+            }
+            header("Location:../views/read_a_story.php?title=".$_POST['title']."&identifier=".$_POST['identifier']);
             
         } elseif (isset($_POST['identifier']) ) {
             $story = $this->cont->getStory($_POST['identifier']);
@@ -46,8 +66,6 @@ class WriteSomething extends View {
             $this->genre = [];
             $this->content = "";
         }
-        
-        $this->genre_dropdown_helper = new Helper();
     }
 
     public function render() { 
@@ -75,7 +93,7 @@ class WriteSomething extends View {
                     <td><label for="select_tag">Genre</label></td>
                     <td id="select">
                         <select id="select_tag" name="genre[]" multiple>
-                            <?php $this->genre_dropdown_helper->generate_genre_dropdown(null); ?>
+                            <?php $this->genre_dropdown_helper->generate_genre_dropdown($this->genre); ?>
                         </select>
                     </td>
                 </tr>
@@ -85,7 +103,7 @@ class WriteSomething extends View {
                 </tr>
                 <tr>
                     <td></td>
-                    <td id="buttons"><input type="reset" value="reset"><input type="submit" value="Save"></td>
+                    <td id="buttons"><input type="submit" name="reset" value="reset"><input type="submit" value="Save"></td>
                 </tr>
             </table>
         </form>

@@ -8,7 +8,8 @@ mysqli_query($con, "CREATE DATABASE story");
 mysqli_select_db($con,'story');
 
 mysqli_query($con, 
-    "CREATE TABLE story (Identifier VARCHAR(30) PRIMARY KEY,
+    "CREATE TABLE story (
+        Identifier VARCHAR(30) PRIMARY KEY,
         Title VARCHAR(30),
         Author VARCHAR(30),
         Text VARCHAR(5000),
@@ -17,12 +18,24 @@ mysqli_query($con,
     )");
 
 mysqli_query($con, 
-    "CREATE TABLE genre (Animal Varchar(30),
+    "CREATE TABLE genre (
+        Animal Varchar(30),
         Funny Varchar(30),
         Cute Varchar(30),
         Crime Varchar(30),
         Fiction Varchar(30),
         Conspiracy Varchar(30)
+    )");
+
+mysqli_query($con,
+    "CREATE TABLE genre2 (
+        Identifier VARCHAR(30) PRIMARY KEY,
+        Animal BOOLEAN,
+        Funny BOOLEAN,
+        Cute BOOLEAN,
+        Crime BOOLEAN,
+        Fiction BOOLEAN,
+        Conspiracy BOOLEAN
     )");
 
 mysqli_query($con, "CREATE TABLE ratings (Identifier VARCHAR(30) PRIMARY KEY,

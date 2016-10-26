@@ -23,13 +23,17 @@ class Helper {
 
 	}
 
-	public function generate_genre_dropdown($selected) {
+	public function generate_genre_dropdown($selected_genres) {
 		if(is_array($this->columnNames))
 		{
-			foreach($this->columnNames as $names)
+			foreach($this->columnNames as $index=>$names)
 			{
-				echo '<option value="'.$names.'">'.$names.'</option>';
-			
+                if ($selected_genres[$index] == 1) {
+                    echo '<option value="'.$names.'" selected>'.$names.'</option>';
+                }
+                else {
+				    echo '<option value="'.$names.'">'.$names.'</option>';
+                }
 			}
 		}
 	}

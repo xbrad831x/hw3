@@ -8,7 +8,7 @@ class PostController {
     
     private $con;
     
-    public function __constructor() {
+    public function __construct() {
         
         $configs = new Configs();
         $this->con = mysqli_connect(
@@ -17,30 +17,95 @@ class PostController {
             $configs->password,
             $configs->db_name
         );
+        mysqli_select_db($this->con, $configs->db_name);
         
     }
     
-    public function saveStory ($story) {
-        
+    public function checkID ($id) {
+        $results = mysqli_query($this->con,
+            "SELECT * FROM story WHERE identifier='$id';"
+        );
+        $num_rows = mysqli_num_rows($results);
+        if ($num_rows == 1) {
+            return true;
+        }
+        return false;
+    }
+    
+    public function updateStory ($t, $a, $id, $g, $w) {
+        echo "Updating";
+        echo $id;
+        mysqli_query($this->con, "UPDATE story SET Title='$t',Author='$a',Text='$w' WHERE Identifier='$id';");
+        mysqli_query($this->con, "UPDATE genre2 SET Animal=0, Funny=0, Cute=0, Crime=0, Fiction=0, Conspiracy=0 WHERE Identifier='$id';");
+        foreach ($g as $genre) {
+            mysqli_query($this->con, "UPDATE genre2 SET $genre=1 WHERE Identifier='$id';");
+        }
+    }
+    
+    public function saveStory ($t, $a, $id, $g, $w) {           
+        $my_date = date("Y-m-d H:i:s");
+        mysqli_query($this->con,
+             "INSERT INTO story (
+                Identifier, 
+                Title, 
+                Author, 
+                Text, 
+                Date) 
+            VALUES ('
+                $id','
+                $t','
+                $a','
+                $w','
+                $my_date
+        ')");
+        mysqli_query($this->con,
+             "INSERT INTO genre2 (
+                Identifier, 
+                Animal, 
+                Funny, 
+                Cute, 
+                Crime,
+                Fiction,
+                Conspiracy) 
+            VALUES ('
+                $id','
+                $g[0]','
+                $g[1]','
+                $g[2]','
+                $g[3]','
+                $g[4]','
+                $g[5]','
+            ')");
     }
     
     public function getStory ($id) {
-        $con = mysqli_connect('localhost','root','');
-		mysqli_select_db($con, 'story');
-        $results = mysqli_query($con, "SELECT * FROM story WHERE Identifier='$id';");
-        $row = mysqli_fetch_assoc($results);
+         
+        $genre_results = mysqli_query($this->con, "SELECT * FROM genre2 WHERE Identifier='$id';");
+        $genre_row = mysqli_fetch_assoc($genre_results);
+        $genre = [
+            $genre_row['Animal'], 
+            $genre_row['Funny'], 
+            $genre_row['Cute'], 
+            $genre_row['Crime'], 
+            $genre_row['Fiction'], 
+            $genre_row['Conspiracy'] 
+        ];
 
+        $results = mysqli_query($this->con, "SELECT * FROM story WHERE Identifier='$id';");
+        $row = mysqli_fetch_assoc($results);
+        
         $story = new Story(
             $row['Title'], 
             $row['Author'], 
             $row['Identifier'], 
-            [],
+            $genre,
             $row['Text']
         );
         //$story->print_details();
         
         return $story;
     }
+    
 
 }
 

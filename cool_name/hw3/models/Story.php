@@ -23,5 +23,13 @@ class Story extends Model {
         echo "<h2>$this->author</h2>";
         echo "<h2>$this->identifier</h2>";
         echo "<h2>$this->text</h2>";
+        
+        $this->print_genre();
+    }
+    
+    private function print_genre() {
+        foreach ($this->genre as $g) {
+            echo "<p>$g<p>";
+        }
     }
 }
