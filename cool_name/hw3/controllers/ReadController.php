@@ -11,6 +11,9 @@ class ReadController extends Controller{
     }
     
     public function set_rating($id, $rate) {
+        $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $rate = filter_var($rate, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         mysqli_query($this->con, 
              "UPDATE ratings 
              SET Num_Of_Ratings = Num_Of_Ratings+1, Sum_Of_Ratings = Sum_Of_Ratings+'$rate'

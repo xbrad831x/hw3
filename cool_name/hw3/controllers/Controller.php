@@ -21,7 +21,13 @@ class Controller {
         mysqli_select_db($this->con, $this->configs->db_name);
     }
     
-    public function updateStory ($t, $a, $id, $g, $w) { 
+    public function updateStory ($t, $a, $id, $g, $w) {
+        $t = filter_var($t, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $a = filter_var($a, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $g = filter_var($g, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $w = filter_var($w, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         mysqli_query($this->con, 
              "UPDATE story 
              SET 
@@ -51,7 +57,12 @@ class Controller {
         }
     }
     
-    public function saveStory ($t, $a, $id, $g, $w) {           
+    public function saveStory ($t, $a, $id, $g, $w) { 
+        $t = filter_var($t, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $a = filter_var($a, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $g = filter_var($g, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $w = filter_var($w, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $my_date = date("Y-m-d H:i:s");
         
         mysqli_query($this->con,
@@ -97,7 +108,9 @@ class Controller {
         );
     }
     
-    public function getStory ($id) {  
+    public function getStory ($id) {
+        $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         $genre_results = mysqli_query($this->con, "SELECT * FROM genre WHERE Identifier='$id';");
         $genre_row = mysqli_fetch_assoc($genre_results);
         $genre = [
