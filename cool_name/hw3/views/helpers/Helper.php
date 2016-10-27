@@ -31,7 +31,7 @@ class Helper {
         if (mysqli_num_rows($results) < 1 ) {
             return;
         }
-        echo '<ul>';
+        echo '<ol>';
         while( $row = mysqli_fetch_assoc($results) ) {
             echo ( 
                 '<li>
@@ -41,7 +41,7 @@ class Helper {
                 </li>'
             );
         }
-        echo '</ul>';
+        echo '</ol>';
     }
     
 }
