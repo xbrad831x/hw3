@@ -1,4 +1,5 @@
 <?php
+use hw3\configs\Configs;
 require_once("configs.php");
 
 $DB_config = new Configs();
