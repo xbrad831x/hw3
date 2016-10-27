@@ -1,5 +1,6 @@
 <?php
 session_start();
+use cool_name\hw3\views\View;
 require_once("./View.php");
 require_once("./helpers/Helper.php");
 require_once("../controllers/ReadController.php");

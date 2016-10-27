@@ -1,4 +1,5 @@
 <?php
+namespace hw3\configs;
 class Configs {
 
 	public $input_maxlength = 30;

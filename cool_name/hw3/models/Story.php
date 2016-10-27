@@ -1,4 +1,6 @@
 <?php
+namespace cool_name\hw3\models;
+use cool_name\hw3\models\Model;
 require_once("../models/Model.php");
 
 class Story extends Model {

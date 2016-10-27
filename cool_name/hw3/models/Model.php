@@ -1,4 +1,5 @@
 <?php
+namespace cool_name\hw3\models;
 require_once("../configs/configs.php");
 
 class Model {

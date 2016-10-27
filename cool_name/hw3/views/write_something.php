@@ -1,4 +1,6 @@
 <?php 
+use cool_name\hw3\views\View;
+use hw3\configs\Configs;
 require('../configs/configs.php');
 require("./View.php");
 require("./helpers/Helper.php");

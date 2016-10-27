@@ -1,4 +1,6 @@
 <?php
+use cool_name\hw3\models\Model;
+use hw3\configs\Configs;
 require_once("../models/Model.php");
 require_once("../configs/configs.php");
 

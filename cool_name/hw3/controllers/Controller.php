@@ -1,4 +1,7 @@
 <?php
+namespace cool_name\hw3\controllers;
+use hw3\configs\Configs;
+use cool_name\hw3\models\Story;
 require_once("../models/Model.php");
 require_once("../configs/configs.php");
 require_once("../models/Story.php");

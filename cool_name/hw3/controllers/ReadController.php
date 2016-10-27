@@ -1,5 +1,5 @@
 <?php
-
+use cool_name\hw3\controllers\Controller;
 require_once("../configs/configs.php");
 require_once("../controllers/Controller.php");
 require_once("../models/Story.php");

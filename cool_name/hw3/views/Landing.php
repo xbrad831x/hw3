@@ -1,5 +1,5 @@
 <?php 
-/*namespace cool_name\hw3\views\landing;*/
+use cool_name\hw3\views\View;
 session_start();
 require_once("View.php");
 require_once("./helpers/Helper.php");
