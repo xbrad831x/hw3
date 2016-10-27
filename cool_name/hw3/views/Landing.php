@@ -10,6 +10,9 @@ class Landing extends View {
     private $rated;
     private $views;
     private $newest;
+    
+    private $text_filter;
+    private $genre_filter;
 
 	public function __construct()  {
         $this->helper = new Helper();
@@ -20,33 +23,40 @@ class Landing extends View {
     public function checkFilters() {
         $filtered = false;
         
-        if ( !empty($_REQUEST['text_filter']) ) {
-            $text_filter = $_REQUEST['text_filter'];
-            $_SESSION['text_filter2'] = $_REQUEST['text_filter'];
+        if ($_REQUEST['text_filter'] == "") {
+            $this->text_filter = "";
+            $_SESSION['text_filter'] = $this->text_filter;
+        }
+        else if ( !empty($_REQUEST['text_filter']) ) {
+            $this->text_filter = $_REQUEST['text_filter'];
+            $_SESSION['text_filter'] = $_REQUEST['text_filter'];
             $filtered = true;
-        } 
-        else if(!empty($_SESSION['text_filter2']))
+        }
+        else if(!empty($_SESSION['text_filter']))
         {
-            ;
+            $this->text_filter = $_SESSION['text_filter'];
         }
         else 
         {
-            $text_filter = "";
-            $_SESSION['text_filter2'] = $text_filter;
+            $this->text_filter = "";
+            $_SESSION['text_filter'] = $text_filter;
         }
             
-        if ( !empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] != "All Genres" ) {
-            $genre_filter = $_REQUEST['genre_filter'];
-            $_SESSION['genre_filter2'] = $_REQUEST['genre_filter'];
+        if ( !empty($_REQUEST['genre_filter'])) {
+            $this->genre_filter = $_REQUEST['genre_filter'];
+            $_SESSION['genre_filter'] = $_REQUEST['genre_filter'];
             $filtered = true;
+        } else if(!empty($_SESSION['text_filter'])) {
+            $this->genre_filter = $_SESSION['genre_filter'];
         } else {
-            $genre_filter = "";
+            $this->genre_filter = "All Genres";
+            $_SESSION['genre_filter'] = $this->genre_filter;
         }
            
         if ($filtered) {
-            $this->rated = $this->cont->get_filtered_rated($text_filter, $genre_filter);
-            $this->views = $this->cont->get_filtered_views($text_filter, $genre_filter);
-            $this->newest = $this->cont->get_filtered_newest($text_filter, $genre_filter);
+            $this->rated = $this->cont->get_filtered_rated($this->text_filter, $this->genre_filter);
+            $this->views = $this->cont->get_filtered_views($this->text_filter, $this->genre_filter);
+            $this->newest = $this->cont->get_filtered_newest($this->text_filter, $this->genre_filter);
         } else {
             $this->rated = $this->cont->get_rated();
             $this->views = $this->cont->get_views();
@@ -55,41 +65,22 @@ class Landing extends View {
     }
 
 	public function render() {
-        $this->renderHeader("Five Thousand Characters")
+        $this->renderHeader("Five Thousand Characters");
         ?>
             <h1>Five Thousand Characters</h1>
             <a href="write_something.php">Write Something!</a>
             <h2>Check out what people are writing...<h2>
 
             <form>
-                <?php if(empty($_SESSION['text_filter2']))
-                { ?>
-                    <input type="text" id="title_filter" name="text_filter" placeholder="Phrase Filter"> <?php
-                }
-                else
-                { ?>
-                    <input type="text" id="title_filter" name="text_filter" value="<?php echo $_SESSION['text_filter2']; ?>" placeholder="Phrase Filter"> <?php
-                } ?>
-                <select id="select_filter" name="genre_filter">
-                    <?php 
-                    if(!empty($_SESSION['genre_filter2']))
-                    {
-                        if($_SESSION['genre_filter2'] == "All Genres")
-                        { ?>
-                            <option selected="selected" value="All Genres">All Genres</option>
-                            <?php $this->helper->generate_genre_dropdown([]); 
-                        }
-                        else
-                        { ?>
-                            <option value="All Genres">All Genres</option> <?php
-                            $this->helper->generate_genre_dropdown($_SESSION['genre_filter2']);
-                        }
+                <?php 
+                    if($this->text_filter == "" || empty($_SESSION['text_filter']) ) {
+                        echo "<input type='text' id='title_filter' name='text_filter' placeholder='Phrase Filter'>";
+                    } else {
+                        echo "<input type='text' id='title_filter' name='text_filter' placeholder='Phrase Filter' value='$this->text_filter'>";
                     }
-                    else
-                    { ?>
-                        <option selected="selected" value="All Genres">All Genres</option>
-                        <?php $this->helper->generate_genre_dropdown([]); 
-                    } ?>
+                ?>
+                <select id="select_filter" name="genre_filter">
+                    <?php $this->helper->generate_landing_genre($this->genre_filter);?>
                 </select>
                 <input type="submit" value="Go">
             </form>

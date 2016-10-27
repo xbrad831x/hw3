@@ -63,13 +63,14 @@ class FilterController extends Controller{
         $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         
         $filter = "";
-        if ($text != "" && $genre != "") {
-            $filter = "story.Title LIKE '%$text%' AND
-                genre.$genre = 1";
-        } elseif ($text != "" && $genre == "") {
+        if ($text == "" && $genre == "All Genres") {
+            return $this->get_views();
+        } elseif ($text != "" && $genre == "All Genres") {
             $filter = "story.Title LIKE '%$text%'";
-        } else {
+        } elseif ($text == "" && $genre!= "All Genres") {
             $filter = "genre.$genre = 1";
+        } else {
+            $filter = "story.Title LIKE '%$text%' AND genre.$genre = 1";
         }
         
 		$results = mysqli_query($this->con, 
@@ -97,13 +98,14 @@ class FilterController extends Controller{
         $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         
         $filter = "";
-        if ($text != "" && $genre != "") {
-            $filter = "story.Title LIKE '%$text%' AND
-                genre.$genre = 1";
-        } elseif ($text != "" && $genre == "") {
+        if ($text == "" && $genre == "All Genres") {
+            return $this->get_rated();
+        } elseif ($text != "" && $genre == "All Genres") {
             $filter = "story.Title LIKE '%$text%'";
-        } else {
+        } elseif ($text == "" && $genre!= "All Genres") {
             $filter = "genre.$genre = 1";
+        } else {
+            $filter = "story.Title LIKE '%$text%' AND genre.$genre = 1";
         }
         
 		$results = mysqli_query($this->con, 
@@ -135,14 +137,14 @@ class FilterController extends Controller{
         $text = filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         
-        $filter = "";
-        if ($text != "" && $genre != "") {
-            $filter = "story.Title LIKE '%$text%' AND
-                genre.$genre = 1";
-        } elseif ($text != "" && $genre == "") {
+        if ($text == "" && $genre == "All Genres") {
+            return $this->get_newest();
+        } elseif ($text != "" && $genre == "All Genres") {
             $filter = "story.Title LIKE '%$text%'";
-        } else {
+        } elseif ($text == "" && $genre!= "All Genres") {
             $filter = "genre.$genre = 1";
+        } else {
+            $filter = "story.Title LIKE '%$text%' AND genre.$genre = 1";
         }
         
 		$results = mysqli_query($this->con, 

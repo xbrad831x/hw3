@@ -16,6 +16,24 @@ class Helper {
         array_shift($this->column_names);
     }
     
+    public function generate_landing_genre ($selected_genre) {
+        if ( empty($_SESSION['genre_filter']) || $_SESSION['genre_filter'] == "All Genres") {
+            echo "<option value='All Genres' selected>All Genres</option>";
+            foreach($this->column_names as $index=>$names) {
+                echo '<option value="'.$names.'">'.$names.'</option>';
+            }
+        } else {
+            echo "<option value='All Genres'>All Genres</option>";
+            foreach($this->column_names as $index=>$names) {
+                if ($selected_genre == $names) {
+                    echo '<option value="'.$names.'" selected>'.$names.'</option>';
+                } else {
+                    echo '<option value="'.$names.'">'.$names.'</option>';
+                }
+            }
+        } 
+    }
+    
     public function generate_genre_dropdown($selected_genres) {
         foreach($this->column_names as $index=>$names) {
             if ( sizeof($selected_genres)==sizeof($this->column_names) && $selected_genres[$index] == 1) {

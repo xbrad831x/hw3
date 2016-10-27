@@ -93,7 +93,6 @@ class Controller {
         $t = filter_var($t, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $a = filter_var($a, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-        $g = filter_var($g, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $w = filter_var($w, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
         $valid = $this->checkForErrors($t, $a, $id, $g, $w);
         if (!$valid) {
