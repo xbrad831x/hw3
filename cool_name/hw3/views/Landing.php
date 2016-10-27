@@ -17,13 +17,15 @@ class Landing extends View {
 	public function __construct()  {
         $this->helper = new Helper();
         $this->cont = new FilterController();
+        $this->text_filter="";
+        $this->genre_filter="All Genres";
         $this->checkFilters();
     }
     
     public function checkFilters() {
         $filtered = false;
         
-        if ($_REQUEST['text_filter'] == "") {
+        if (isset($_REQUEST['text_filter']) && $_REQUEST['text_filter'] == "") {
             $this->text_filter = "";
             $_SESSION['text_filter'] = $this->text_filter;
         }
@@ -39,14 +41,14 @@ class Landing extends View {
         else 
         {
             $this->text_filter = "";
-            $_SESSION['text_filter'] = $text_filter;
+            $_SESSION['text_filter'] = $this->text_filter;
         }
             
         if ( !empty($_REQUEST['genre_filter'])) {
             $this->genre_filter = $_REQUEST['genre_filter'];
             $_SESSION['genre_filter'] = $_REQUEST['genre_filter'];
             $filtered = true;
-        } else if(!empty($_SESSION['text_filter'])) {
+        } else if(!empty($_SESSION['genre_filter'])) {
             $this->genre_filter = $_SESSION['genre_filter'];
         } else {
             $this->genre_filter = "All Genres";
