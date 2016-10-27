@@ -11,8 +11,7 @@ class ReadController extends Controller{
     }
     
     public function set_rating($id, $rate) {
-        $id = filter_var($id, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-        $rate = filter_var($rate, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        //validate not needed cause it isnt user input
         
         mysqli_query($this->con, 
              "UPDATE ratings 
@@ -22,6 +21,8 @@ class ReadController extends Controller{
     }
     
     public function increment_view ($id) {
+        //validate not needed cause it isnt user input
+        
         mysqli_query($this->con, "UPDATE story SET Views=Views+1 WHERE Identifier='$id'");
         
     }

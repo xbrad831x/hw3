@@ -20,7 +20,8 @@ class ReadAStory extends View {
     
     public function render_rating_sys() {
         $key = sha1($_GET['identifier']);
-        if( !empty($_GET['link']) && empty($_SESSION[$_GET['identifier']]) ) {
+        
+        if( !empty($_GET['link']) && empty($_SESSION[$key]) ) {
             $rate = $_GET['link'];
             $this->cont->set_rating($_GET['identifier'], $rate);
             $_SESSION[$key] = $rate;
@@ -49,6 +50,7 @@ class ReadAStory extends View {
                 echo "<a href='$link'>$x</a>";
             }
         }
+        $this->cont->getStory($_GET['identifier']);
     }
     
     public function render() {

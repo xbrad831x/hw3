@@ -58,6 +58,9 @@ class FilterController extends Controller{
 	}
 	
 	public function get_filtered_views($text, $genre) {
+        $text = filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         $filter = "";
         if ($text != "" && $genre != "") {
             $filter = "story.Title LIKE '%$text%' AND
@@ -89,6 +92,9 @@ class FilterController extends Controller{
 	}
     
     public function get_filtered_rated($text, $genre) {
+        $text = filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         $filter = "";
         if ($text != "" && $genre != "") {
             $filter = "story.Title LIKE '%$text%' AND
@@ -125,6 +131,9 @@ class FilterController extends Controller{
 	}
     
 	public function get_filtered_newest($text, $genre) {
+        $text = filter_var($text, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        $genre = filter_var($genre, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+        
         $filter = "";
         if ($text != "" && $genre != "") {
             $filter = "story.Title LIKE '%$text%' AND

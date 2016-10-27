@@ -20,7 +20,7 @@ class Landing extends View {
     public function checkFilters() {
         $filtered = false;
         if ( !empty($_REQUEST['text_filter']) ) {
-            $text_filter = filter_var($_REQUEST['text_filter'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+            $text_filter = $_REQUEST['text_filter'];
             $filtered = true;
         } else {
             $text_filter = "";
