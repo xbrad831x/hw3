@@ -19,15 +19,25 @@ class Landing extends View {
     
     public function checkFilters() {
         $filtered = false;
+        
         if ( !empty($_REQUEST['text_filter']) ) {
             $text_filter = $_REQUEST['text_filter'];
+            $_SESSION['text_filter2'] = $_REQUEST['text_filter'];
             $filtered = true;
-        } else {
+        } 
+        else if(!empty($_SESSION['text_filter2']))
+        {
+            ;
+        }
+        else 
+        {
             $text_filter = "";
+            $_SESSION['text_filter2'] = $text_filter;
         }
             
         if ( !empty($_REQUEST['genre_filter']) && $_REQUEST['genre_filter'] != "All Genres" ) {
             $genre_filter = $_REQUEST['genre_filter'];
+            $_SESSION['genre_filter2'] = $_REQUEST['genre_filter'];
             $filtered = true;
         } else {
             $genre_filter = "";
@@ -52,10 +62,34 @@ class Landing extends View {
             <h2>Check out what people are writing...<h2>
 
             <form>
-                <input type="text" id="title_filter" name="text_filter" placeholder="Phrase Filter">
+                <?php if(empty($_SESSION['text_filter2']))
+                { ?>
+                    <input type="text" id="title_filter" name="text_filter" placeholder="Phrase Filter"> <?php
+                }
+                else
+                { ?>
+                    <input type="text" id="title_filter" name="text_filter" value="<?php echo $_SESSION['text_filter2']; ?>" placeholder="Phrase Filter"> <?php
+                } ?>
                 <select id="select_filter" name="genre_filter">
-                    <option selected="selected" value="All Genres">All Genres</option>
-                    <?php $this->helper->generate_genre_dropdown([]); ?>
+                    <?php 
+                    if(!empty($_SESSION['genre_filter2']))
+                    {
+                        if($_SESSION['genre_filter2'] == "All Genres")
+                        { ?>
+                            <option selected="selected" value="All Genres">All Genres</option>
+                            <?php $this->helper->generate_genre_dropdown([]); 
+                        }
+                        else
+                        { ?>
+                            <option value="All Genres">All Genres</option> <?php
+                            $this->helper->generate_genre_dropdown($_SESSION['genre_filter2']);
+                        }
+                    }
+                    else
+                    { ?>
+                        <option selected="selected" value="All Genres">All Genres</option>
+                        <?php $this->helper->generate_genre_dropdown([]); 
+                    } ?>
                 </select>
                 <input type="submit" value="Go">
             </form>
