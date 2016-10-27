@@ -1,5 +1,6 @@
 <?php 
 /*namespace cool_name\hw3\views\landing;*/
+session_start();
 require_once("View.php");
 require_once("./helpers/Helper.php");
 require_once("../controllers/FilterController.php");
