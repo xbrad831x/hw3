@@ -12,11 +12,34 @@ class ReadAStory extends View {
         if (empty($_GET['identifier'])) {
             header("Location:./Landing.php");
         }
-        
         $this->cont = new ReadController();
         
         $this->cont->getStory($_GET['identifier']);
         $this->cont->increment_view($_GET['identifier']);
+    }
+    
+    public function render_rating_sys() {
+        if( !empty($_GET['link']) && empty($_SESSION[$_GET['identifier']]) ) {
+            $rate = $_GET['link'];
+            $this->cont->set_rating($_GET['identifier'], $rate);
+            $_SESSION[$_GET['identifier']] = $rate;
+        }
+        else if( !empty($_SESSION[$_GET['identifier']])) {
+            for($i = 1; $i < 6; $i++) {
+                if($_SESSION[$_GET['identifier']] == $i) {
+                    echo '<b> '.$i.' </b>';
+                }
+                else {
+                    echo ' '.$i.' ';
+                }
+            }
+        } else {
+            $url= $_SERVER['REQUEST_URI'];
+            for ($x = 1; $x < 6; $x++) {
+                $link = $url."&link=".$x;
+                echo "<a href='$link'>$x</a>";
+            }
+        }
     }
     
     public function render() {
@@ -37,33 +60,7 @@ class ReadAStory extends View {
                 </p>
                 <p>
                     Your Rating:
-                    <?php
-                        if(!empty($_GET['link']) && empty($_SESSION[$_GET['identifier']])) {
-                            $rate = $_GET['link'];
-                            $this->cont->set_rating($_GET['identifier'], $rate);
-                            $_SESSION[$_GET['identifier']] = $rate;
-                        }
-                        else if(empty($_GET['link']) && !empty($_SESSION[$_GET['identifier']])) {
-                            for($i = 1; $i < 6; $i++)
-                            {
-                                if($_SESSION[$_GET['identifier']] == $i)
-                                {
-                                    echo '<b> '.$i.' </b>';
-                                }
-                                else
-                                {
-                                    echo ' '.$i.' ';
-                                }
-                            }
-                        } 
-                        else {
-                            $url= $_SERVER['REQUEST_URI'];
-                            for ($x = 1; $x < 6; $x++) {
-                                $link = $url."&link=".$x;
-                                echo "<a href='$link'>$x</a>";
-                            }
-                        }
-                    ?>
+                    <?php $this->render_rating_sys(); ?>
                 </p>
                 <!--1, 2, 3, 4 ,5-->
                 <p>
