@@ -24,6 +24,14 @@ class ReadAStory extends View {
             $rate = $_GET['link'];
             $this->cont->set_rating($_GET['identifier'], $rate);
             $_SESSION[$key] = $rate;
+			for($i = 1; $i < 6; $i++) {
+                if($_SESSION[$key] == $i) {
+                    echo '<b> '.$i.' </b>';
+                }
+                else {
+                    echo ' '.$i.' ';
+                }
+            }
         }
         else if( !empty($_SESSION[$key])) {
             for($i = 1; $i < 6; $i++) {
