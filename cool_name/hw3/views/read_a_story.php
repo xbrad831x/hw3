@@ -19,14 +19,15 @@ class ReadAStory extends View {
     }
     
     public function render_rating_sys() {
+        $key = sha1($_GET['identifier']);
         if( !empty($_GET['link']) && empty($_SESSION[$_GET['identifier']]) ) {
             $rate = $_GET['link'];
             $this->cont->set_rating($_GET['identifier'], $rate);
-            $_SESSION[$_GET['identifier']] = $rate;
+            $_SESSION[$key] = $rate;
         }
-        else if( !empty($_SESSION[$_GET['identifier']])) {
+        else if( !empty($_SESSION[$key])) {
             for($i = 1; $i < 6; $i++) {
-                if($_SESSION[$_GET['identifier']] == $i) {
+                if($_SESSION[$key] == $i) {
                     echo '<b> '.$i.' </b>';
                 }
                 else {
