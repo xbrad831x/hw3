@@ -45,6 +45,7 @@ table {
 
 .label label {
     width: 60px;
+    font-size: 16px;
     text-align: right;
     float: left;
 }
@@ -52,6 +53,7 @@ table {
 .label input {
     width: 150px;
     padding: 3px;
+    font-size: 16px;
     margin-left: 5px;
     float: left;
 }

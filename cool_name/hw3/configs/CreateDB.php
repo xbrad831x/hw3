@@ -13,7 +13,7 @@ mysqli_query($con,
         Title VARCHAR(30),
         Author VARCHAR(30),
         Text VARCHAR(5000),
-        Date timestamp,
+        Date datetime,
         Views INT UNSIGNED NOT NULL
     )"
 );
