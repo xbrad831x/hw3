@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("./View.php");
 require_once("./helpers/Helper.php");
 require_once("../controllers/ReadController.php");
@@ -14,10 +15,6 @@ class ReadAStory extends View {
         
         $this->cont = new ReadController();
         
-        if(!empty($_GET['link'])) {
-            $rate = $_GET['link'];
-            $this->cont->set_rating($_GET['identifier'], $rate);
-        }
         $this->cont->getStory($_GET['identifier']);
         $this->cont->increment_view($_GET['identifier']);
     }
@@ -41,9 +38,25 @@ class ReadAStory extends View {
                 <p>
                     Your Rating:
                     <?php
-                        if(!empty($_GET['link'])) {
-                            echo $_GET['link'];
-                        } else {
+                        if(!empty($_GET['link']) && empty($_SESSION[$_GET['identifier']])) {
+                            $rate = $_GET['link'];
+                            $this->cont->set_rating($_GET['identifier'], $rate);
+                            $_SESSION[$_GET['identifier']] = $rate;
+                        }
+                        else if(empty($_GET['link']) && !empty($_SESSION[$_GET['identifier']])) {
+                            for($i = 1; $i < 6; $i++)
+                            {
+                                if($_SESSION[$_GET['identifier']] == $i)
+                                {
+                                    echo '<b> '.$i.' </b>';
+                                }
+                                else
+                                {
+                                    echo ' '.$i.' ';
+                                }
+                            }
+                        } 
+                        else {
                             $url= $_SERVER['REQUEST_URI'];
                             for ($x = 1; $x < 6; $x++) {
                                 $link = $url."&link=".$x;
