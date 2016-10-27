@@ -32,23 +32,31 @@ class WriteSomething extends View {
             isset($_POST['writing'])    && $_POST['writing'] != "")
         {
             $doesExists = $this->cont->checkID($_POST['identifier']);
-            
+            $valid = false;
             if ($doesExists) {
-                $this->cont->updateStory(
+                $valid = $this->cont->updateStory(
                     $_POST['title'],
                     $_POST['author'],
                     $_POST['identifier'],
                     $_POST['genre'],
                     $_POST['writing']);
             } else {
-                $this->cont->saveStory(
+                $valid = $this->cont->saveStory(
                     $_POST['title'],
                     $_POST['author'],
                     $_POST['identifier'],
                     $_POST['genre'],
                     $_POST['writing']);
             }
-            header("Location:../views/read_a_story.php?title=".$_POST['title']."&identifier=".$_POST['identifier']);
+            if (!$valid) {
+                $this->title = $_POST['title'];
+                $this->author = $_POST['author'];
+                $this->identifier = $_POST['identifier'];
+                $this->genre = $_POST['genre'];
+                $this->content = $_POST['writing'];
+            } else {
+                header("Location:../views/read_a_story.php?title=".$_POST['title']."&identifier=".$_POST['identifier']);
+            }
             
         } elseif (isset($_POST['identifier']) ) {
             $story = $this->cont->getStory($_POST['identifier']);
