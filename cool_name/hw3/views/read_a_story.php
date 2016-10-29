@@ -13,6 +13,7 @@ class ReadAStory extends View {
         if (empty($_GET['identifier'])) {
             header("Location:./Landing.php");
         }
+        $this->helper = new Helper();
         $this->cont = new ReadController();
         
         $this->cont->getStory($_GET['identifier']);
@@ -80,7 +81,7 @@ class ReadAStory extends View {
                     <?php echo $this->cont->get_rating() ?>
                 </p>
                 <p id="title" style="margin-top: 15px;">Story:</p>
-                <p id="story_text"><?php echo $this->cont->get_text() ?></p>
+                <p id="story_text"><?php echo $this->helper->render_story($this->cont->get_text() ); ?></p>
             </div>
         <?php
         $this->renderFooter();

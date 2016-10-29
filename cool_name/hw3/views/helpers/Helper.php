@@ -64,5 +64,13 @@ class Helper {
         echo '</ol>';
     }
     
+    public function render_story($text) {
+        $formatted = preg_split('/\r\n\r\n/', $text);
+        foreach ($formatted as $line) {
+            echo "<p>$line</p>";
+        }
+        
+    }
+    
 }
 ?>
